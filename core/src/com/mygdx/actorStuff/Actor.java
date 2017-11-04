@@ -1,28 +1,41 @@
 package com.mygdx.actorStuff;
 
+
 import java.util.Collection;
 import java.util.NoSuchElementException;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
+
+import com.badlogic.gdx.math.Polygon;
 import com.mygdx.actorStuff.states.State;
 
-public abstract class Actor {
+
+public abstract class Actor implements Collidable{
 	protected float posx;
 	protected float posy;
 	protected float hitPoints;
 	protected float movementSpeed;
 	protected float angle;
-	protected Sprite sprite;
+	protected Polygon hitbox;
 	protected State curState;
 	protected Collection<State> states;
+	protected long[] abilityCooldowns;
 	
-	public Actor(float posx, float posy, float hitpoints, float movementSpeed, Sprite sprite, Collection<State> states) {
+	public Actor(float posx, float posy, float hitpoints, float movementSpeed, int numAbilities, Polygon hitbox, Collection<State> states) {
 		this.posx = posx;
 		this.posy = posy;
 		this.hitPoints = hitpoints;
 		this.movementSpeed = movementSpeed;
-		this.sprite = sprite;
 		this.states = states;
+		this.hitbox = hitbox;
+		abilityCooldowns = new long[numAbilities];
+	}
+	
+	public long getAbilityTime(int ability) {
+		return abilityCooldowns[ability];
+	}
+	
+	public void setAbilityTime(int ability) {
+		abilityCooldowns[ability] = System.currentTimeMillis();
 	}
 	
 	public Object useAbility(int abilityNum, Object extraStuff) {
@@ -37,7 +50,9 @@ public abstract class Actor {
 		return curState.standard();
 	}
 	
-	
+	public boolean collision(Collidable [] collisions) {
+		return curState.collision(collisions);
+	}
 	
 	public float getHitPoints() {
 		return hitPoints;
@@ -65,16 +80,11 @@ public abstract class Actor {
 
 	public State getState(String typeOfState) {
 
-		try {
-			Class tos = Class.forName(typeOfState);
-			for (State state : states) {
-				if (state.getClass() == tos) 
-					return state;
-			}
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		for (State state : states) {
+			if (state.getClass().getSimpleName().equals(typeOfState)) 
+				return state;
 		}
+
 		throw new NoSuchElementException("A state of " + typeOfState + " could not be found") ;
 	}
 
@@ -94,12 +104,12 @@ public abstract class Actor {
 		this.posy = posy;
 	}
 
-	public Sprite getSprite() {
-		return sprite;
+	public Polygon getHitbox() {
+		return hitbox;
 	}
 
-	public void setSprite(Sprite sprite) {
-		this.sprite = sprite;
+	public void setHitbox(Polygon hitbox) {
+		this.hitbox = hitbox;
 	}
 
 	public State getCurState() {
