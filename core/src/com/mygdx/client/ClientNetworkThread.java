@@ -13,6 +13,7 @@ public class ClientNetworkThread extends Thread {
     private BufferedReader inFromServer;
     //private String dataFromServer;
     private boolean connectedToServer = false;
+    
 	public void run() {
 		if (!connectedToServer) {
 			connectToServer();
@@ -20,9 +21,10 @@ public class ClientNetworkThread extends Thread {
 		}
 		sendAndReceiveFromServer();
 	}
+	
 	private void connectToServer() {
 		try {
-			clientSocket = new Socket("127.0.0.1", 6789);
+			clientSocket = new Socket("204.84.9.82", 6789);
 			outToServer = new DataOutputStream(clientSocket.getOutputStream());
 			inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			System.out.println("Connected to Server");
