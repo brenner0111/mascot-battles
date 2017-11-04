@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.client;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -15,6 +15,8 @@ public class MascotBattles extends ApplicationAdapter {
 	
 	SpriteBatch batch;
 	Texture img;
+	ClientNetworkThread nt;
+	int renderCounter;
 	
 	private OrthographicCamera camera;
 	private Viewport viewport;
@@ -23,10 +25,15 @@ public class MascotBattles extends ApplicationAdapter {
 	public void create () {
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
+
 		camera = new OrthographicCamera();
 		viewport =  new StretchViewport(GAME_WORLD_WIDTH, GAME_WORLD_HEIGHT, camera);
 		viewport.apply();
 		camera.position.set(GAME_WORLD_WIDTH/2, GAME_WORLD_HEIGHT/2, 0);
+
+		nt = new ClientNetworkThread();
+		nt.start();
+		renderCounter = 0;
 	}
 	
 	@Override
@@ -39,6 +46,10 @@ public class MascotBattles extends ApplicationAdapter {
 	public void render () {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		if (renderCounter % 10 == 0 && renderCounter != 0) {
+			System.out.println(nt.getDataFromServer());
+		}
+		renderCounter++;
 		batch.begin();
 		batch.draw(img, 0, 0);
 		batch.end();
@@ -48,5 +59,6 @@ public class MascotBattles extends ApplicationAdapter {
 	public void dispose () {
 		batch.dispose();
 		img.dispose();
+		nt.interrupt();
 	}
 }
