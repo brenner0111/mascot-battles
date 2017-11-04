@@ -6,12 +6,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class ServerThread extends Thread {
 	    protected Socket socket;
+	    protected String data;
+	    protected boolean isDone;
+	    protected String outString;
+	    protected volatile String temp;
 
 	    public ServerThread(Socket clientSocket) {
 	        this.socket = clientSocket;
+	        this.data = "";
+	        this.isDone = false;
+	        this.outString = "";
 	    }
 
 	    public void run() {
@@ -26,13 +34,15 @@ public class ServerThread extends Thread {
 	        } catch (IOException e) {
 	            return;
 	        }
-	        String line;
 	        while (true) {
 	            try {
-	                line = brinp.readLine();
-	                line = line.toUpperCase() + '\n';
-	                out.writeBytes(line);
-	                //System.out.println(line);
+	               data = brinp.readLine();
+	               if (isDone) {
+	            	   	   //System.out.println("isDone Condition");
+	            	       outString = temp.substring(0, temp.length());
+	               }
+	               out.writeBytes(outString + '\n');
+//	                data = data.replaceAll("\n", " ").toUpperCase() + '\n'
 	            }
 	            catch (IOException e) {
 	                e.printStackTrace();

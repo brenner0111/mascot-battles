@@ -34,7 +34,6 @@ public class MascotBattles extends Game {
 
 		nt = new ClientNetworkThread();
 		nt.start();
-		renderCounter = 0;
 	}
 	
 	@Override
@@ -47,10 +46,6 @@ public class MascotBattles extends Game {
 	public void render () {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		if (renderCounter % 10 == 0 && renderCounter != 0) {
-			System.out.println(nt.getDataFromServer());
-		}
-		renderCounter++;
 		batch.begin();
 		batch.draw(img, 0, 0);
 		batch.end();
