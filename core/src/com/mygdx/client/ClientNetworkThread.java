@@ -11,7 +11,7 @@ public class ClientNetworkThread extends Thread {
 	private Socket clientSocket;
 	private DataOutputStream outToServer;
     private BufferedReader inFromServer;
-    private volatile String dataFromServer;
+    //private String dataFromServer;
     private boolean connectedToServer = false;
 	public void run() {
 		if (!connectedToServer) {
@@ -33,17 +33,16 @@ public class ClientNetworkThread extends Thread {
 		}	
 	}
 	
-	private synchronized void sendAndReceiveFromServer() {
-		try {
-        		//Send to server - KEY PRESSES
-			outToServer.writeBytes("this is coming from the network thread" + '\n');
-			 //receive from server - RECEIVE STRING FROM SERVER
-			dataFromServer = dataFromServer + inFromServer.readLine();
-		} catch (IOException e) {
-			e.printStackTrace();
+	private void sendAndReceiveFromServer() {
+		while(true) {
+			try {
+	        		//Send to server - KEY PRESSES
+				outToServer.writeBytes("test\n");
+				 //receive from server - RECEIVE STRING FROM SERVER
+				System.out.println(inFromServer.readLine());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-	}
-	synchronized String getDataFromServer() {
-		return dataFromServer;
 	}
 }
