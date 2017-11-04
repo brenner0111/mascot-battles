@@ -9,14 +9,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class MascotBattles extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
-	NetworkThread nt;
+	ClientNetworkThread nt;
 	int renderCounter;
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
-		nt = new NetworkThread();
+		nt = new ClientNetworkThread();
 		nt.start();
 		renderCounter = 0;
 	}

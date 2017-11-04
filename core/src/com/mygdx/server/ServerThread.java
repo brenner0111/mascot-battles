@@ -32,7 +32,7 @@ public class ServerThread extends Thread {
 	                line = brinp.readLine();
 	                line = line.toUpperCase() + '\n';
 	                out.writeBytes(line);
-	                System.out.println(line);
+	                //System.out.println(line);
 	            }
 	            catch (IOException e) {
 	                e.printStackTrace();

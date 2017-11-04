@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class NetworkThread extends Thread {
+public class ClientNetworkThread extends Thread {
 	private Socket clientSocket;
 	private DataOutputStream outToServer;
     private BufferedReader inFromServer;
@@ -33,12 +33,12 @@ public class NetworkThread extends Thread {
 		}	
 	}
 	
-	private void sendAndReceiveFromServer() {
+	private synchronized void sendAndReceiveFromServer() {
 		try {
-        		//Send to server
+        		//Send to server - KEY PRESSES
 			outToServer.writeBytes("this is coming from the network thread" + '\n');
-			 //receive from server
-			dataFromServer = inFromServer.readLine();
+			 //receive from server - RECEIVE STRING FROM SERVER
+			dataFromServer = dataFromServer + inFromServer.readLine();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
