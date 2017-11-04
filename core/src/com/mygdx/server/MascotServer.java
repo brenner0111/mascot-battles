@@ -12,6 +12,7 @@ public class MascotServer {
         Socket connectionSocket = null;
         
         //listen, connect, and create a new Server thread
+        
         while (true) {
             try {
                 connectionSocket = listeningSocket.accept(); 
