@@ -24,5 +24,7 @@ public class Ram extends Actor{
 	public int getTeam() {
 		return 1;
 	}
+	
+	
 
 }
