@@ -15,7 +15,7 @@ public class Devil extends Actor{
 
 	public Devil(float posx, float posy) {
 		
-		super(posx, posy, 10000, .5f, 2, new Polygon(new float[] {-1.5f,-1.5f,1.5f,-1.5f,1.5f,1.5f,-1.5f,1.5f}), new ArrayList<State>());
+		super(posx, posy, 10000, .4f, 2, new Polygon(new float[] {-1.5f,-1.5f,1.5f,-1.5f,1.5f,1.5f,-1.5f,1.5f}), new ArrayList<State>());
 		states.add(new StateDevilIdle(this));
 		states.add(new StateDevilDead(this));
 		states.add(new StateDevilShoot360(this));

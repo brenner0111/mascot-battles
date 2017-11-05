@@ -3,6 +3,7 @@ package com.mygdx.actorStuff.states.devilStates;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.actorStuff.Actor;
 import com.mygdx.actorStuff.Collidable;
+import com.mygdx.actorStuff.ProjectileDevil;
 import com.mygdx.actorStuff.states.State;
 import com.mygdx.server.MascotServer;
 
@@ -34,6 +35,8 @@ public class StateDevilShootPlayer extends State{
 		if (stateDeltaTime < .25)	//how long to stay in this state
 			return null;
 		System.out.println("I am shooting at the player");
+		//for (int i = 0; i < MascotServer.players.size(); i++)
+			//MascotServer.projectiles.add(new ProjectileDevil(context.getPosx(),context.getPosy(),(float)context.getPosx() - MascotServer.players.get(i).getPosx(),(float)Math.random()));
 		context.setAbilityTime(1);
 		context.setCurState(context.getState("StateDevilIdle"));
 		stateDeltaTime = 0;

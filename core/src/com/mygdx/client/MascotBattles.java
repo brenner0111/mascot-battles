@@ -27,6 +27,7 @@ public class MascotBattles extends ApplicationAdapter {
 
 	private Sprite playerSprite;
 	private Sprite devilSprite;
+	private Sprite beams;
 	
 
 	private Texture img;
@@ -56,6 +57,7 @@ public class MascotBattles extends ApplicationAdapter {
 		camera.position.set(GAME_WORLD_WIDTH/2, GAME_WORLD_HEIGHT/2, 0);
 		playerSprite = new Sprite(new Texture("Characters/Ramcharacter.png"));
 		devilSprite = new Sprite(new Texture("Characters/dukebluedevilcharacter.png"));
+		beams = new Sprite(new Texture("Attacks/beams.png"));
 		
 		nt = new ClientNetworkThread();
 		nt.start();
@@ -75,6 +77,7 @@ public class MascotBattles extends ApplicationAdapter {
     batch.begin();
 
 		String tmp = nt.fromServer.substring(0, nt.fromServer.length());
+
 		String[] strs = tmp.split("\\s+");
 		if (strs.length > 1) {
 			for (int i = 0; i < strs.length; i++) {
@@ -142,6 +145,10 @@ public class MascotBattles extends ApplicationAdapter {
 					
 					batch.draw(devilSprite,Float.parseFloat(strs[i + 1]) / 4, Float.parseFloat(strs[i + 2]) / 4,45,63);
 					i += 3;
+				} else if (str.equals("s")) {
+					beams.setRegion(116, 6, 18, 18);
+					batch.draw(beams, Float.parseFloat(strs[i + 1]) / 4f, Float.parseFloat(strs[i+2]) / 4f);
+					i += 2;
 				}
 			}
 		}

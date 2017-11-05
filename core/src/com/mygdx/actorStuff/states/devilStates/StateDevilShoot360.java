@@ -3,6 +3,7 @@ package com.mygdx.actorStuff.states.devilStates;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.actorStuff.Actor;
 import com.mygdx.actorStuff.Collidable;
+import com.mygdx.actorStuff.ProjectileDevil;
 import com.mygdx.actorStuff.states.State;
 import com.mygdx.server.MascotServer;
 
@@ -23,6 +24,10 @@ public class StateDevilShoot360 extends State{
 		if (stateDeltaTime < .25)	//how long to stay in this state
 			return;
 		System.out.println("I am shooting 360");
+		for (int i = 0; i < 25; i++)
+			MascotServer.projectiles.add(new ProjectileDevil(context.getPosx(),context.getPosy()
+					,(float)(Math.random() * 6) * (Math.random() > .5 ? -1 : 1) + (float) Math.cos(-context.getAngle()) * context.getMovementSpeed()
+					,(float)( Math.random() * 6) * (Math.random() > .5 ? -1 : 1) + (float) Math.sin(-context.getAngle()) * context.getMovementSpeed()));
 		context.setAbilityTime(0);
 		context.setCurState(context.getState("StateDevilIdle"));
 		stateDeltaTime = 0;
@@ -34,6 +39,10 @@ public class StateDevilShoot360 extends State{
 		if (stateDeltaTime < .25)	//how long to stay in this state
 			return null;
 		System.out.println("I am shooting 360");
+		for (int i = 0; i < 25; i++)
+			MascotServer.projectiles.add(new ProjectileDevil(context.getPosx(),context.getPosy()
+					,(float)(Math.random() * 6) * (Math.random() > .5 ? -1 : 1) + (float) Math.cos(-context.getAngle()) * context.getMovementSpeed()
+					,(float)( Math.random() * 6) * (Math.random() > .5 ? -1 : 1) + (float) Math.sin(-context.getAngle()) * context.getMovementSpeed()));
 		context.setAbilityTime(0);
 		context.setCurState(context.getState("StateDevilIdle"));
 		stateDeltaTime = 0;
