@@ -6,6 +6,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
@@ -23,6 +24,10 @@ public class MascotBattles extends ApplicationAdapter {
 	private DisplayScreen displayScreen;
 	private float mouseX;
 	private float mouseY;
+
+	private Sprite playerSprite;
+	private Sprite devilSprite;
+	
 
 	private Texture img;
 
@@ -49,7 +54,9 @@ public class MascotBattles extends ApplicationAdapter {
 		viewport =  new StretchViewport(GAME_WORLD_WIDTH, GAME_WORLD_HEIGHT, camera);
 		viewport.apply();
 		camera.position.set(GAME_WORLD_WIDTH/2, GAME_WORLD_HEIGHT/2, 0);
-
+		playerSprite = new Sprite(new Texture("Characters/Ramcharacter.png"));
+		devilSprite = new Sprite(new Texture("Characters/dukebluedevilcharacter.png"));
+		
 		nt = new ClientNetworkThread();
 		nt.start();
 	}
@@ -65,12 +72,79 @@ public class MascotBattles extends ApplicationAdapter {
 
 		getMouseCoords();
 		renderLogic();
+    batch.begin();
 
-		batch.begin();
 		String tmp = nt.fromServer.substring(0, nt.fromServer.length());
 		String[] strs = tmp.split("\\s+");
-		if (strs.length > 1)
-			batch.draw(img, Float.parseFloat(strs[1]) / 4, Float.parseFloat(strs[2]) / 4);
+		if (strs.length > 1) {
+			for (int i = 0; i < strs.length; i++) {
+				String str = strs[i];
+				if (str.equals("p")) {
+					float angle = Float.parseFloat(strs[i + 3]);
+					boolean isNotRunning = nt.isNotRunning;
+					
+					if (angle < (3 * 3.13 / 4) && angle > (3.15 / 4)) {
+						//facing up
+						if (isNotRunning)
+							playerSprite.setRegion(0, 21, 15, 21);
+						else
+							playerSprite.setRegion((int)(15 * (System.currentTimeMillis()/100 % 3)), 21, 15, 21);
+					} else if (angle >= (3 * 3.13 / 4) || angle <= (-3 * 3.13 / 4)) {
+						//facing left
+						if (isNotRunning)
+							playerSprite.setRegion(0, 42, 15, 21);
+						else
+							playerSprite.setRegion((int)(15 * (System.currentTimeMillis()/100 % 3)), 42, 15, 21);
+					} else if (angle > (-3 * 3.13 / 4) && angle < (-3.15 / 4)) {
+						//facing down
+						if (isNotRunning)
+							playerSprite.setRegion(0, 0, 15, 21);
+						else
+							playerSprite.setRegion((int)(15 * (System.currentTimeMillis()/100 % 3)), 0, 15, 21);
+					} else if (angle >= (-3.15 / 4) || angle < (3.15 / 4)) {
+						//facing right
+						if (isNotRunning)
+							playerSprite.setRegion(0, 63, 15, 21);
+						else
+							playerSprite.setRegion((int)(15 * (System.currentTimeMillis()/100 % 3)), 63, 15, 21);
+					}
+					batch.draw(playerSprite,Float.parseFloat(strs[i + 1]) / 4, Float.parseFloat(strs[i + 2]) / 4);
+					i += 3;
+				} else if (str.equals("e")) {
+					float angle = Float.parseFloat(strs[i + 3]);
+					boolean isNotRunning = nt.isNotRunning;
+					
+					if (angle < (3 * 3.13 / 4) && angle > (3.15 / 4)) {
+						//facing up
+//						if (isNotRunning)
+//							devilSprite.setRegion(0, 21, 15, 21);
+//						else
+						devilSprite.setRegion((int)(15 * (System.currentTimeMillis()/100 % 3)), 21, 15, 21);
+					} else if (angle >= (3 * 3.13 / 4) || angle <= (-3 * 3.13 / 4)) {
+						//facing left
+//						if (isNotRunning)
+//							devilSprite.setRegion(0, 42, 15, 21);
+//						else
+						devilSprite.setRegion((int)(15 * (System.currentTimeMillis()/100 % 3)), 42, 15, 21);
+					} else if (angle > (-3 * 3.13 / 4) && angle < (-3.15 / 4)) {
+						//facing down
+//						if (isNotRunning)
+//							devilSprite.setRegion(0, 0, 15, 21);
+//						else
+						devilSprite.setRegion((int)(15 * (System.currentTimeMillis()/100 % 3)), 0, 15, 21);
+					} else if (angle >= (-3.15 / 4) || angle < (3.15 / 4)) {
+						//facing right
+//						if (isNotRunning)
+//							devilSprite.setRegion(0, 63, 15, 21);
+//						else
+						devilSprite.setRegion((int)(15 * (System.currentTimeMillis()/100 % 3)), 63, 15, 21);
+					}
+					
+					batch.draw(devilSprite,Float.parseFloat(strs[i + 1]) / 4, Float.parseFloat(strs[i + 2]) / 4,45,63);
+					i += 3;
+				}
+			}
+		}
 		else
 			batch.draw(img, 0, 0);
 		batch.end();
@@ -178,6 +252,8 @@ public class MascotBattles extends ApplicationAdapter {
 	public void dispose () {
 		batch.dispose();
 		//img.dispose();
+		playerSprite.getTexture().dispose();
+		devilSprite.getTexture().dispose();
 		nt.interrupt();
 	}
 }

@@ -13,10 +13,12 @@ import com.badlogic.gdx.Input;
 public class ClientNetworkThread extends Thread {
 	private Socket clientSocket;
 	private DataOutputStream outToServer;
-	private BufferedReader inFromServer;
-	public volatile String fromServer = "";
-	//private String dataFromServer;
-	private boolean connectedToServer = false;
+    private BufferedReader inFromServer;
+    public volatile String fromServer = "";
+    public volatile boolean isNotRunning = true;
+    //private String dataFromServer;
+    private boolean connectedToServer = false;
+    
 
 	public void run() {
 		if (!connectedToServer) {
@@ -46,7 +48,9 @@ public class ClientNetworkThread extends Thread {
 				outToServer.writeBytes(getKeyboardInputs() + "\n");
 				//receive from server - RECEIVE STRING FROM SERVER
 				fromServer = inFromServer.readLine();
+
 				//System.out.println(fromServer);
+
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -61,16 +65,24 @@ public class ClientNetworkThread extends Thread {
 	}
 
 	private String getKeyboardInputs() {
+		isNotRunning = true;
 		String ret = "";
-		if (Gdx.input.isKeyPressed(Input.Keys.W)) 
+		if (Gdx.input.isKeyPressed(Input.Keys.W)) {
 			ret += "W ";
-
-		if (Gdx.input.isKeyPressed(Input.Keys.A))
+			isNotRunning = false;
+		}
+		if (Gdx.input.isKeyPressed(Input.Keys.A)) {
 			ret += "A ";
-		if (Gdx.input.isKeyPressed(Input.Keys.S))
+			isNotRunning = false;
+		}
+		if (Gdx.input.isKeyPressed(Input.Keys.S)) {
 			ret += "S ";
-		if (Gdx.input.isKeyPressed(Input.Keys.D))
+			isNotRunning = false;
+		}
+		if (Gdx.input.isKeyPressed(Input.Keys.D)) {
 			ret += "D ";
+			isNotRunning = false;
+		}
 		ret += "| ";
 		if (Gdx.input.isKeyPressed(Input.Keys.NUM_1))
 			ret += "1";
