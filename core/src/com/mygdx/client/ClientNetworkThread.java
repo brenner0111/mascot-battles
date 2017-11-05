@@ -13,11 +13,11 @@ import com.badlogic.gdx.Input;
 public class ClientNetworkThread extends Thread {
 	private Socket clientSocket;
 	private DataOutputStream outToServer;
-    private BufferedReader inFromServer;
-    public volatile String fromServer = "";
-    //private String dataFromServer;
-    private boolean connectedToServer = false;
-    
+	private BufferedReader inFromServer;
+	public volatile String fromServer = "";
+	//private String dataFromServer;
+	private boolean connectedToServer = false;
+
 	public void run() {
 		if (!connectedToServer) {
 			connectToServer();
@@ -25,7 +25,7 @@ public class ClientNetworkThread extends Thread {
 		}
 		sendAndReceiveFromServer();
 	}
-	
+
 	private void connectToServer() {
 		try {
 			clientSocket = new Socket("127.0.0.1", 6789);
@@ -38,17 +38,15 @@ public class ClientNetworkThread extends Thread {
 			e.printStackTrace();
 		}	
 	}
-	
+
 	private void sendAndReceiveFromServer() {
 		while(true) {
 			try {
-	        		//Send to server - KEY PRESSES
-				
-				
+				//Send to server - KEY PRESSES
 				outToServer.writeBytes(getKeyboardInputs() + "\n");
-				 //receive from server - RECEIVE STRING FROM SERVER
+				//receive from server - RECEIVE STRING FROM SERVER
 				fromServer = inFromServer.readLine();
-				System.out.println(fromServer);
+				//System.out.println(fromServer);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -61,7 +59,7 @@ public class ClientNetworkThread extends Thread {
 
 		}
 	}
-	
+
 	private String getKeyboardInputs() {
 		String ret = "";
 		if (Gdx.input.isKeyPressed(Input.Keys.W)) 

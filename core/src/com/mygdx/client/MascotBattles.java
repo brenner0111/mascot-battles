@@ -23,7 +23,7 @@ public class MascotBattles extends ApplicationAdapter {
 	private DisplayScreen displayScreen;
 	private float mouseX;
 	private float mouseY;
-	
+
 	private Texture img;
 
 	private SpriteBatch batch;
@@ -65,8 +65,8 @@ public class MascotBattles extends ApplicationAdapter {
 
 		getMouseCoords();
 		renderLogic();
-    
-    batch.begin();
+
+		batch.begin();
 		String tmp = nt.fromServer.substring(0, nt.fromServer.length());
 		String[] strs = tmp.split("\\s+");
 		if (strs.length > 1)
@@ -173,6 +173,7 @@ public class MascotBattles extends ApplicationAdapter {
 		}
 
 	}
+	
 	@Override
 	public void dispose () {
 		batch.dispose();

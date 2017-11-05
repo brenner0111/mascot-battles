@@ -4,10 +4,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.concurrent.TimeUnit;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.mygdx.actorStuff.Actor;
 import com.mygdx.actorStuff.Ram;
 
@@ -105,6 +102,7 @@ public class MascotServer{
 					break;
 			}
 		}
+		
 		if (ability != -1) {
 			a.useAbility(ability, null);
 			a.standard();
@@ -118,17 +116,52 @@ public class MascotServer{
 
 	}
 	
+	public static boolean checkIfPlayerInBounds(float x, float y) {
+		if (x >= 80f && x <= 4167f && y >= 80f && y <= 2700f) {
+			return true;
+		}
+		return false;
+	}
 	private static String process() {
 		String ret = "";
 		
 		for (Actor a : players) {
 			ret += "p ";
-			ret += a.getPosx() + " ";
-			ret += a.getPosy() + " ";
-			ret += a.getAngle() + " ";
+			if (checkIfPlayerInBounds(a.getPosx(), a.getPosy())) {
+				ret += a.getPosx() + " ";
+				ret += a.getPosy() + " ";
+				ret += a.getAngle() + " ";
+			}
+			else {
+				ret += getClosestX(a.getPosx()) + " ";
+				ret += getClosestY(a.getPosy()) + " ";
+				ret += a.getAngle() + " ";
+			}
+			
+			System.out.println("XY:" + "(" + a.getPosx() + ", "	+ a.getPosy() + ")");
 		}
 
 		return ret;
+	}
+	
+	public static float getClosestX(float currentX) {
+		if (currentX - 4167f > 0) {
+			return 4167f;
+		}
+		else if (currentX <= 0) {
+			return 0;
+		}
+		return currentX;
+	}
+	
+	public static float getClosestY(float currentY) {
+		if (currentY - 2700f > 0) {
+			return 2700f;
+		}
+		else if (currentY <= 0) {
+			return 0;
+		}
+		return currentY;
 	}
 
 }
