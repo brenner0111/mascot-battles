@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
@@ -22,7 +23,8 @@ public class MascotBattles extends ApplicationAdapter {
 	private DisplayScreen displayScreen;
 	private float mouseX;
 	private float mouseY;
-
+	
+	private Texture img;
 
 	private SpriteBatch batch;
 	private ClientNetworkThread nt;
@@ -36,6 +38,7 @@ public class MascotBattles extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		displayScreen = new DisplayScreen();
 		displayStartScreen = true;
+		img = new Texture("Characters/Ramcharacter.png");
 		displayGameScreen = false;
 		displayVictoryScreen = false;
 		displayDefeatScreen = false;
