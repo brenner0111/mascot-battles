@@ -4,16 +4,20 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 import com.mygdx.actorStuff.Actor;
 import com.mygdx.actorStuff.Devil;
+import com.mygdx.actorStuff.Projectile;
 import com.mygdx.actorStuff.Ram;
 
 public class MascotServer{
 	protected static ArrayList<ServerThread> threads = new ArrayList<ServerThread>();
 	protected static ArrayList<String> inputs = new ArrayList<String>();
-	protected static ArrayList<Actor> players = new ArrayList<Actor>();
-	protected static Actor devil = new Devil(500,500);
+	public static ArrayList<Actor> players = new ArrayList<Actor>();
+	public static LinkedList<Projectile> projectiles = new LinkedList<Projectile>();
+	protected static Actor devil = new Devil(2000,2000);
 	public static long curtime = System.currentTimeMillis();
 	public static long deltatime = 0;
 	public static long cake = 1;
@@ -51,6 +55,21 @@ public class MascotServer{
 	        
 	        deltatime = System.currentTimeMillis() - curtime;
 	        curtime = System.currentTimeMillis();
+        
+	        aiLogic();
+	        
+	        Iterator<Projectile> it = projectiles.iterator();
+	        while (it.hasNext()) {
+	        	Projectile p = it.next();
+	        	if (p.lifetime > 0) {
+	        		p.lifetime -= deltatime;
+	        		p.posx += p.vx;
+	        		p.posy += p.vy;
+	        	} else {
+	        		it.remove();
+	        	}
+	        }
+	        
 	        String tmp = process();
 	        
         	for (int i = 0; i < threads.size(); i++) {
@@ -124,6 +143,19 @@ public class MascotServer{
 		}
 		return false;
 	}
+	
+	private static void aiLogic() {
+		float angle = devil.getAngle();
+		float playerx = players.get(0).getPosx();
+		float playery = players.get(0).getPosy();
+		playerx = devil.getPosx() - playerx;
+		playery = devil.getPosy() - playery;
+		float tmpa = (float) Math.atan2((double)-playery, (double)-playerx);
+		devil.move(tmpa);
+		
+		devil.useAbility((int) Math.round(Math.random()), null);
+	}
+	
 	private static String process() {
 		String ret = "";
 		
@@ -140,13 +172,19 @@ public class MascotServer{
 				ret += a.getAngle() + " ";
 			}
 			
-			System.out.println("XY:" + "(" + a.getPosx() + ", "	+ a.getPosy() + ")");
+			//System.out.println("XY:" + "(" + a.getPosx() + ", "	+ a.getPosy() + ")");
 		}
 		
 		ret += "e ";
 		ret += devil.getPosx() + " ";
 		ret += devil.getPosy() + " ";
 		ret += devil.getAngle() + " ";
+		
+		for (Projectile p : projectiles) {
+			ret += "s ";
+			ret += p.posx + " ";
+			ret += p.posy + " ";
+		}
 
 		return ret;
 	}
