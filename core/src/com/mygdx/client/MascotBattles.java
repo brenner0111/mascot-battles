@@ -43,7 +43,6 @@ public class MascotBattles extends ApplicationAdapter {
 
 		nt = new ClientNetworkThread();
 		nt.start();
-		renderCounter = 0;
 	}
 	
 	@Override
@@ -61,9 +60,7 @@ public class MascotBattles extends ApplicationAdapter {
 			//System.out.println(nt.getDataFromServer());
 		}
 		renderCounter++;
-		/*batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();*/
+
 	}
 	
 	private void renderLogic() {
