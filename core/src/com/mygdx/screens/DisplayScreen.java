@@ -3,6 +3,7 @@ package com.mygdx.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class DisplayScreen{
@@ -13,14 +14,13 @@ public class DisplayScreen{
 	private Texture victoryScreen;
 	private Texture defeatScreen;
 
-	
+
 	public DisplayScreen() {
-		startScreen = new Texture("badlogic.jpg");
-		loadingScreen = new Texture("loadingScreen.jpg");
-		gameScreen = new Texture("badlogic3.jpg");
-		victoryScreen = new Texture("victoryScreen.jpg");
-		defeatScreen = new Texture("defeatedScreen.jpg");
-		
+		startScreen = new Texture("menu/MenuScreen.png");
+		loadingScreen = new Texture("menu/loadingScreen.png");
+		gameScreen = new Texture("world/Map.png");
+		victoryScreen = new Texture("menu/victoryScreen.png");
+		defeatScreen = new Texture("menu/defeatedScreen.png");
 	}
 
 	public void drawStartScreen(SpriteBatch batch) {
@@ -30,13 +30,16 @@ public class DisplayScreen{
 		batch.draw(startScreen, 0, 0);
 		batch.end();
 	}
+	
 	public void drawLoadingScreen(SpriteBatch batch) {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
+		
 		batch.draw(loadingScreen, 0, 0);
 		batch.end();
 	}
+	
 	public void drawGameScreen(SpriteBatch batch) {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -51,12 +54,16 @@ public class DisplayScreen{
 		batch.draw(victoryScreen, 0, 0);
 		batch.end();
 	}
+	
 	public void drawDefeatScreen(SpriteBatch batch) {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		batch.draw(defeatScreen, 0, 0);
 		batch.end();
+	}
+	public Sprite createSprite(Texture texture, int initX, int initY) {
+		return new Sprite(texture);
 	}
 
 
