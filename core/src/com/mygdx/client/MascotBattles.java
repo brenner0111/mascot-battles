@@ -138,8 +138,8 @@ public class MascotBattles extends ApplicationAdapter {
 		}
 		else if (displayGameScreen) {
 			if(Gdx.input.justTouched()) {
-				displayGameScreen = false;
-				displayVictoryScreen = true;
+				displayGameScreen = true;
+				//displayVictoryScreen = true;
 			}
 		}
 		else if (displayVictoryScreen) {
