@@ -47,7 +47,13 @@ public class MascotBattles extends Game {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		batch.draw(img, 0, 0);
+		String tmp = nt.fromServer.substring(0, nt.fromServer.length());
+		System.out.println("--- " + tmp);
+		String[] strs = tmp.split("\\s+");
+		if (strs.length > 1)
+			batch.draw(img, Float.parseFloat(strs[1]) / 4, Float.parseFloat(strs[2]) / 4);
+		else
+			batch.draw(img, 0, 0);
 		batch.end();
 	}
 	

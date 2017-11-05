@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.mygdx.actorStuff.Actor;
 import com.mygdx.actorStuff.Collidable;
 import com.mygdx.actorStuff.states.State;
+import com.mygdx.server.MascotServer;
 
 public class StateRamSpit extends State{
 
@@ -18,7 +19,7 @@ public class StateRamSpit extends State{
 
 	@Override
 	public void move(float angle) {
-		stateDeltaTime += Gdx.graphics.getDeltaTime();
+		stateDeltaTime += MascotServer.deltatime;
 		if (stateDeltaTime < .25)	//how long to stay in this state
 			return;
 		System.out.println("I am spitting");
@@ -29,7 +30,7 @@ public class StateRamSpit extends State{
 
 	@Override
 	public Object standard() {
-		stateDeltaTime += Gdx.graphics.getDeltaTime();
+		stateDeltaTime += MascotServer.deltatime;
 		if (stateDeltaTime < .25)	//how long to stay in this state
 			return null;
 		System.out.println("I am spitting");
