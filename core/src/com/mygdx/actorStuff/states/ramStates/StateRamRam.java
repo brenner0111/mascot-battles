@@ -14,6 +14,7 @@ public class StateRamRam extends State{
 
 	@Override
 	public Object useAbility(int abilityNum, Object extraStuff) {
+		move(context.getAngle());
 		return null;
 	}
 

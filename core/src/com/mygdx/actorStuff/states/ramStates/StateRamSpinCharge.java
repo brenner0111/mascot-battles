@@ -9,11 +9,13 @@ import com.mygdx.server.MascotServer;
 public class StateRamSpinCharge extends State{
 
 	public StateRamSpinCharge(Actor context) {
+		
 		super(context);
 	}
 
 	@Override
 	public Object useAbility(int abilityNum, Object extraStuff) {
+		move(context.getAngle());
 		return null;
 	}
 

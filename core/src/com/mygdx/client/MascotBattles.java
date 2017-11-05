@@ -208,7 +208,7 @@ public class MascotBattles extends ApplicationAdapter {
 				displayGameScreen = true;
 			}*/
 			try {
-				TimeUnit.SECONDS.sleep(1);
+				TimeUnit.SECONDS.sleep(3);
 				displayLoadingScreen = false;
 				displayGameScreen = true;
 			} catch (InterruptedException e) {
