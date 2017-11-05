@@ -33,6 +33,7 @@ public class ServerThread extends Thread {
 	        } catch (IOException e) {
 	            return;
 	        }
+	        //Eventually need to change while game hasn't started
 	        while (true) {
 	            try {
 	               data = brinp.readLine();

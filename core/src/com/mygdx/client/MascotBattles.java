@@ -24,10 +24,11 @@ public class MascotBattles extends ApplicationAdapter {
 	private DisplayScreen displayScreen;
 	private float mouseX;
 	private float mouseY;
-	
+
 	private Sprite playerSprite;
 	private Sprite devilSprite;
 	
+
 	private Texture img;
 
 	private SpriteBatch batch;
@@ -71,7 +72,6 @@ public class MascotBattles extends ApplicationAdapter {
 
 		getMouseCoords();
 		renderLogic();
-    
     batch.begin();
 
 		String tmp = nt.fromServer.substring(0, nt.fromServer.length());
@@ -212,8 +212,8 @@ public class MascotBattles extends ApplicationAdapter {
 		}
 		else if (displayGameScreen) {
 			if(Gdx.input.justTouched()) {
-				displayGameScreen = false;
-				displayVictoryScreen = true;
+				displayGameScreen = true;
+				//displayVictoryScreen = true;
 			}
 		}
 		else if (displayVictoryScreen) {
@@ -247,6 +247,7 @@ public class MascotBattles extends ApplicationAdapter {
 		}
 
 	}
+	
 	@Override
 	public void dispose () {
 		batch.dispose();
