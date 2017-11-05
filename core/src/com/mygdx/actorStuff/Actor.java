@@ -43,6 +43,8 @@ public abstract class Actor implements Collidable{
 	}
 	
 	public void move(float angle) {
+
+		//System.out.println(getPosx());
 		curState.move(angle);
 	}
 	

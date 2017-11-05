@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.mygdx.actorStuff.Actor;
 import com.mygdx.actorStuff.Collidable;
 import com.mygdx.actorStuff.states.State;
+import com.mygdx.server.MascotServer;
 
 public class StateRamHeal extends State{
 
@@ -18,7 +19,7 @@ public class StateRamHeal extends State{
 
 	@Override
 	public void move(float angle) {
-		stateDeltaTime += Gdx.graphics.getDeltaTime();
+		stateDeltaTime += MascotServer.deltatime;
 		if (stateDeltaTime < .3)	//how long to stay in this state
 			return;
 		System.out.println("I am healing");
@@ -33,7 +34,7 @@ public class StateRamHeal extends State{
 
 	@Override
 	public Object standard() {
-		stateDeltaTime += Gdx.graphics.getDeltaTime();
+		stateDeltaTime += MascotServer.deltatime;
 		if (stateDeltaTime < .3)	//how long to stay in this state
 			return null;
 		System.out.println("I am healing");

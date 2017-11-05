@@ -7,10 +7,14 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+
 public class ClientNetworkThread extends Thread {
 	private Socket clientSocket;
 	private DataOutputStream outToServer;
     private BufferedReader inFromServer;
+    public volatile String fromServer = "";
     //private String dataFromServer;
     private boolean connectedToServer = false;
     
@@ -24,7 +28,7 @@ public class ClientNetworkThread extends Thread {
 	
 	private void connectToServer() {
 		try {
-			clientSocket = new Socket("204.84.9.82", 6789);
+			clientSocket = new Socket("127.0.0.1", 6789);
 			outToServer = new DataOutputStream(clientSocket.getOutputStream());
 			inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			System.out.println("Connected to Server");
@@ -39,12 +43,47 @@ public class ClientNetworkThread extends Thread {
 		while(true) {
 			try {
 	        		//Send to server - KEY PRESSES
-				outToServer.writeBytes("test\n");
+				
+				
+				outToServer.writeBytes(getKeyboardInputs() + "\n");
 				 //receive from server - RECEIVE STRING FROM SERVER
-				System.out.println(inFromServer.readLine());
+				fromServer = inFromServer.readLine();
+				System.out.println(fromServer);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			try {
+				Thread.sleep(5);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		}
+	}
+	
+	private String getKeyboardInputs() {
+		String ret = "";
+		if (Gdx.input.isKeyPressed(Input.Keys.W)) 
+			ret += "W ";
+
+		if (Gdx.input.isKeyPressed(Input.Keys.A))
+			ret += "A ";
+		if (Gdx.input.isKeyPressed(Input.Keys.S))
+			ret += "S ";
+		if (Gdx.input.isKeyPressed(Input.Keys.D))
+			ret += "D ";
+		ret += "| ";
+		if (Gdx.input.isKeyPressed(Input.Keys.NUM_1))
+			ret += "1";
+		else if (Gdx.input.isKeyPressed(Input.Keys.NUM_2))
+			ret += "2";
+		else if (Gdx.input.isKeyPressed(Input.Keys.NUM_3))
+			ret += "3";
+		else if (Gdx.input.isKeyPressed(Input.Keys.NUM_4))
+			ret += "4";
+		else
+			ret += "";
+		return ret;
 	}
 }
