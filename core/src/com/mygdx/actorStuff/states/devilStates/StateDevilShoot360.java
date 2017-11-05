@@ -1,4 +1,4 @@
-package com.mygdx.actorStuff.states.ramStates;
+package com.mygdx.actorStuff.states.devilStates;
 
 import com.badlogic.gdx.Gdx;
 import com.mygdx.actorStuff.Actor;
@@ -6,9 +6,9 @@ import com.mygdx.actorStuff.Collidable;
 import com.mygdx.actorStuff.states.State;
 import com.mygdx.server.MascotServer;
 
-public class StateRamHeal extends State{
+public class StateDevilShoot360 extends State{
 
-	public StateRamHeal(Actor context) {
+	public StateDevilShoot360(Actor context) {
 		super(context);
 	}
 
@@ -20,39 +20,31 @@ public class StateRamHeal extends State{
 	@Override
 	public void move(float angle) {
 		stateDeltaTime += MascotServer.deltatime;
-		if (stateDeltaTime < .3)	//how long to stay in this state
+		if (stateDeltaTime < .25)	//how long to stay in this state
 			return;
-		System.out.println("I am healing");
-		context.setAbilityTime(3);
-		context.setCurState(context.getState("StateRamIdle"));
+		System.out.println("I am shooting 360");
+		context.setAbilityTime(0);
+		context.setCurState(context.getState("StateDevilIdle"));
 		stateDeltaTime = 0;
-		if (context.getHitPoints() + 25 <= 100)
-			context.setHitPoints(context.getHitPoints() + 25);
-		else
-			context.setHitPoints(100);
 	}
 
 	@Override
 	public Object standard() {
 		stateDeltaTime += MascotServer.deltatime;
-		if (stateDeltaTime < .3)	//how long to stay in this state
+		if (stateDeltaTime < .25)	//how long to stay in this state
 			return null;
-		System.out.println("I am healing");
-		context.setAbilityTime(3);
-		context.setCurState(context.getState("StateRamIdle"));
+		System.out.println("I am shooting 360");
+		context.setAbilityTime(0);
+		context.setCurState(context.getState("StateDevilIdle"));
 		stateDeltaTime = 0;
-		if (context.getHitPoints() + 25 <= 100)
-			context.setHitPoints(context.getHitPoints() + 25);
-		else
-			context.setHitPoints(100);
 		return null;
 	}
 
 	@Override
 	public boolean collision(Collidable[] collisions) {
-
+		
 		float tmp = 0;
-		int team = 1;
+		int team = 2;
 		float maxDamage = 0;
 		boolean hitWall = false;
 		for (Collidable collidable : collisions) {
@@ -63,17 +55,18 @@ public class StateRamHeal extends State{
 				hitWall = true;
 				break;
 			case 1:
+				maxDamage = (tmp > maxDamage) ? tmp : maxDamage;
 				break;
 			default:
-				maxDamage = (tmp > maxDamage) ? tmp : maxDamage;
+				break;
 			}
 		}
 		context.setHitPoints(context.getHitPoints() - maxDamage);
-		if (maxDamage > 0)
-			context.setCurState(context.getState("StateRamDamaged"));
+
 		
 		if (context.getHitPoints() <= 0)
-			context.setCurState(context.getState("StateRamDead"));
+			context.setCurState(context.getState("StateDevilDead"));
+		
 		return hitWall;
 	}
 

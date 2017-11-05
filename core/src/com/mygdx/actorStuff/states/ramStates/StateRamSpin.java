@@ -25,7 +25,7 @@ public class StateRamSpin extends State{
 		if (stateDeltaTime < 3)	//how long to stay in this state
 			return;
 
-		context.setAbilityTime(0);
+		context.setAbilityTime(2);
 		context.setCurState(context.getState("StateRamIdle"));
 		stateDeltaTime = 0;
 	}
@@ -38,7 +38,7 @@ public class StateRamSpin extends State{
 		if (stateDeltaTime < 3)	//how long to stay in this state
 			return null;
 
-		context.setAbilityTime(0);
+		context.setAbilityTime(2);
 		context.setCurState(context.getState("StateRamIdle"));
 		stateDeltaTime = 0;
 		return null;

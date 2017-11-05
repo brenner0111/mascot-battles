@@ -9,12 +9,14 @@ import java.util.concurrent.TimeUnit;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.mygdx.actorStuff.Actor;
+import com.mygdx.actorStuff.Devil;
 import com.mygdx.actorStuff.Ram;
 
 public class MascotServer{
 	protected static ArrayList<ServerThread> threads = new ArrayList<ServerThread>();
 	protected static ArrayList<String> inputs = new ArrayList<String>();
 	protected static ArrayList<Actor> players = new ArrayList<Actor>();
+	protected static Actor devil = new Devil(500,500);
 	public static long curtime = System.currentTimeMillis();
 	public static long deltatime = 0;
 	public static long cake = 1;
@@ -127,6 +129,11 @@ public class MascotServer{
 			ret += a.getPosy() + " ";
 			ret += a.getAngle() + " ";
 		}
+		
+		ret += "e ";
+		ret += devil.getPosx() + " ";
+		ret += devil.getPosy() + " ";
+		ret += devil.getAngle() + " ";
 
 		return ret;
 	}
