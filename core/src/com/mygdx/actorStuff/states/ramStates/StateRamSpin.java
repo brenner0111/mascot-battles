@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.mygdx.actorStuff.Actor;
 import com.mygdx.actorStuff.Collidable;
 import com.mygdx.actorStuff.states.State;
+import com.mygdx.server.MascotServer;
 
 public class StateRamSpin extends State{
 
@@ -20,7 +21,7 @@ public class StateRamSpin extends State{
 	public void move(float angle) {
 		System.out.println("I am spinning");
 		
-		stateDeltaTime += Gdx.graphics.getDeltaTime();
+		stateDeltaTime += MascotServer.deltatime;
 		if (stateDeltaTime < 3)	//how long to stay in this state
 			return;
 
@@ -33,7 +34,7 @@ public class StateRamSpin extends State{
 	public Object standard() {
 		System.out.println("I am spinning");
 		
-		stateDeltaTime += Gdx.graphics.getDeltaTime();
+		stateDeltaTime += MascotServer.deltatime;
 		if (stateDeltaTime < 3)	//how long to stay in this state
 			return null;
 

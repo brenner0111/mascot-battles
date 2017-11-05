@@ -59,14 +59,18 @@ public class MascotBattles extends ApplicationAdapter {
 
 	@Override
 	public void render () {
+
 		getMouseCoords();
 		renderLogic();
-
-
-		if (renderCounter % 10 == 0 && renderCounter != 0) {
-			//System.out.println(nt.getDataFromServer());
-		}
-		renderCounter++;
+    
+    batch.begin();
+		String tmp = nt.fromServer.substring(0, nt.fromServer.length());
+		String[] strs = tmp.split("\\s+");
+		if (strs.length > 1)
+			batch.draw(img, Float.parseFloat(strs[1]) / 4, Float.parseFloat(strs[2]) / 4);
+		else
+			batch.draw(img, 0, 0);
+		batch.end();
 
 	}
 
@@ -164,6 +168,7 @@ public class MascotBattles extends ApplicationAdapter {
 		else {
 			System.out.println("Updateing Screen flags error");
 		}
+
 	}
 	@Override
 	public void dispose () {

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.mygdx.actorStuff.Actor;
 import com.mygdx.actorStuff.Collidable;
 import com.mygdx.actorStuff.states.State;
+import com.mygdx.server.MascotServer;
 
 public class StateRamDamaged extends State{
 
@@ -18,10 +19,10 @@ public class StateRamDamaged extends State{
 
 	@Override
 	public void move(float angle) {
-		context.setPosx((float) (context.getPosx() + (Math.cos(angle) * context.getMovementSpeed() * Gdx.graphics.getDeltaTime())));
-		context.setPosy((float) (context.getPosy() + (Math.sin(angle) * context.getMovementSpeed() * Gdx.graphics.getDeltaTime())));
+		context.setPosx((float) (context.getPosx() + (Math.cos(angle) * context.getMovementSpeed() * MascotServer.deltatime)));
+		context.setPosy((float) (context.getPosy() + (Math.sin(angle) * context.getMovementSpeed() * MascotServer.deltatime)));
 		context.setAngle(angle);
-		stateDeltaTime += Gdx.graphics.getDeltaTime();
+		stateDeltaTime += MascotServer.deltatime;
 		if (stateDeltaTime < 2)	//how long to stay in this state
 			return;
 		context.setCurState(context.getState("StateRamIdle"));
@@ -30,7 +31,7 @@ public class StateRamDamaged extends State{
 
 	@Override
 	public Object standard() {
-		stateDeltaTime += Gdx.graphics.getDeltaTime();
+		stateDeltaTime += MascotServer.deltatime;
 		if (stateDeltaTime < 2)	//how long to stay in this state
 			return null;
 		context.setCurState(context.getState("StateRamIdle"));

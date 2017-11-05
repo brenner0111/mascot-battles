@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.mygdx.actorStuff.Actor;
 import com.mygdx.actorStuff.Collidable;
 import com.mygdx.actorStuff.states.State;
+import com.mygdx.server.MascotServer;
 
 public class StateRamRamCharge extends State{
 
@@ -19,7 +20,7 @@ public class StateRamRamCharge extends State{
 	@Override
 	public void move(float angle) {
 
-		stateDeltaTime += Gdx.graphics.getDeltaTime();
+		stateDeltaTime += MascotServer.deltatime;
 		if (stateDeltaTime < .5)	//how long to stay in this state
 			return;
 		context.setAbilityTime(0);
@@ -30,7 +31,7 @@ public class StateRamRamCharge extends State{
 	@Override
 	public Object standard() {
 		
-		stateDeltaTime += Gdx.graphics.getDeltaTime();
+		stateDeltaTime += MascotServer.deltatime;
 		if (stateDeltaTime < .5)	//how long to stay in this state
 			return null;
 		context.setAbilityTime(0);
